@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LogsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,6 @@ Route::get('/home', [
 
 
 Route::resource('investments', App\Http\Controllers\InvestmentController::class);
+
+
+Route::resource('logs', App\Http\Controllers\LogsController::class);

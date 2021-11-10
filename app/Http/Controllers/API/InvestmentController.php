@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\Logs;
 use Flash;
 use Response;
 
@@ -26,6 +27,14 @@ class InvestmentController extends Controller {
 
             $user->remember_token = $success['token'];
             $user->save();
+
+            $logs = new Logs();
+
+            $logs->userid = $user->id;
+            $logs->log = "Login";
+            $logs->logdetails = "User $user->username has logged in into the system";
+            $logs->logtype = "API login";
+            $logs->save();
             return response()->json($success, $this->successStatus);
         } else {
             return response()->json(['response' => 'User not found'], 404);
