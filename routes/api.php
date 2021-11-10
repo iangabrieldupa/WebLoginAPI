@@ -19,4 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('test-query', [InvestmentController::class, 'testQuery']);
+Route::post('login', [InvestmentController::class, 'login']);
+Route::post('register', [InvestmentController::class, 'register']);
