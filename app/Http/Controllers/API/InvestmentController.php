@@ -71,5 +71,55 @@ class InvestmentController extends Controller {
             }
         }
     }
+
+
+public function investment(Request $request) {
+    $validator = Validator::make($request->all(), [
+        'lastName' => 'required',
+        'firstName' => 'required',
+        'accountName' => 'required',
+        'init_invest' => 'required',
+        'start_date' => 'required',
+        'remarks' => 'required'
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['response' => $validator->errors()], 401);
+  
+    } else {
+        $input = $request->all();
+
+    if(Investment::where('accountName', $input['accountName'])->exists()) {
+        return response()->json(['response' => 'Account Name is Invalid'], 401);
+    }else{
+            $investment = Investment::create($input);
+
+            $success['lastName'] = $investment->lastName;
+            $success['firstName'] = $investment->firstName;
+            $success['accountName'] = $investment->accountName;
+            $success['init_invest'] = $investment->init_invest;
+            $success['start_date'] = $investment->start_date;
+            $success['remarks'] = $investment->remarks;
+
+
+            return response()->json($success, $this->successStatus);
+        }
+    }
+
+}
+
+
+public function resetPassword(Request $request) {
+    $user = User::where('email', $request['email'])->first();
+
+    if ($user != null) {
+        $user->password = bcrypt($request['password']);
+        $user->save();
+
+        return response()->json(['response' => 'User has successfully resetted his/her password'], $this->successStatus);
+    } else {
+        return response()->json(['response' => 'User not found'], 404);
+    }
+  }
 }
 ?>

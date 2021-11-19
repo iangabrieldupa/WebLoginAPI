@@ -31,3 +31,6 @@ Route::resource('investments', App\Http\Controllers\InvestmentController::class)
 
 
 Route::resource('logs', App\Http\Controllers\LogsController::class);
+
+
+Route::resource('posts', App\Http\Controllers\PostsController::class);
